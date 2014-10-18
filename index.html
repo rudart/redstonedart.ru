@@ -20,7 +20,8 @@ menu_item: index
       <div class="panel panel-default feature-panel">
         <div class="panel-heading">Просто и понятно</div>
         <div class="panel-body">
-          <b>Redstone.dart</b> allows you to easily publish your functions and classes through a web interface, by just adding some annotations to them.
+          <b>Redstone.dart</b> 
+          позволяет легко давать доступ к функциям и классам через веб-интерфейс. Нужно просто добавить аннотацию.
           
           <div class="highlight"><pre><code class="dart"><span class="k">import</span> <span class="s1">&#39;package:redstone/server.dart&#39;</span> <span class="k">as</span> <span class="n">app</span><span class="p">;</span>
 
@@ -37,16 +38,16 @@ menu_item: index
     </div>
     <div class="col-md-4">
       <div class="panel panel-default feature-panel">
-        <div class="panel-heading">Мощно</div>
+        <div class="panel-heading">Сильно</div>
         <div class="panel-body">
-          Includes support for <b>request interceptors</b>, <b>error handlers</b>, <b>dependency injection</b> and <a href="/doc/Feature-tour.html"> many other features</a>.
+          Поддержка <b>перехватчиков запросов</b>, <b>слушателей ошибок</b>, <b>DI</b> и <a href="/doc/Feature-tour.html"> еще многого интересного</a>.
           <div class="highlight"><pre><code class="dart"><a href="#" class="dart-popover" data-toggle="popover" title="@Interceptor" data-html="true" data-trigger="hover focus" data-content="Use the @Interceptor annotation to define a request interceptor.">@app.Interceptor</a><span class="p">(</span><span class="s1">r&#39;/admin/.*&#39;</span><span class="p">)</span>
 <span class="n">adminFilter</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">app</span><span class="p">.</span><span class="n">chain</span><span class="p">.</span><span class="n">next</span><span class="p">();</span>
   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="n">app</span><span class="p">.</span><span class="n">chain</span><span class="p">.</span><span class="n">interrupt</span><span class="p">(</span><span class="nl">statusCode:</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">UNAUTHORIZED</span><span class="p">);</span>
-    <span class="c1">//or app.redirect(&quot;/login.html&quot;);</span>
+    <span class="c1">//или app.redirect(&quot;/login.html&quot;);</span>
   <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
           <div class="highlight"><pre><code class="dart"><a href="#" class="dart-popover" data-toggle="popover" title="@ErrorHandler" data-trigger="hover focus" data-content="Use the @ErrorHandler annotation to define an error handler.">@app.ErrorHandler</a><span class="p">(</span><span class="m">404</span><span class="p">)</span>
@@ -58,7 +59,7 @@ menu_item: index
       <div class="panel panel-default feature-panel">
         <div class="panel-heading">Легко тестировать</div>
         <div class="panel-body">
-          Easily test your server, without the need of an external tool.
+          Тестирование сервера можно производить без какого либо стороннего инструмента.
           <div class="highlight"><pre><code class="dart"><span class="n">main</span><span class="p">()</span> <span class="p">{</span>
 
   <span class="n">setUp</span><span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">setUp</span><span class="p">);</span>
