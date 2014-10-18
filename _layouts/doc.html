@@ -7,31 +7,31 @@ layout: default
       <ul>
         <ul class="nav sidenav">
           <li>
-            <b>Quick Start Guide</b>
+            <b>Быстрый старт</b>
             <ul class="nav">
-              <li {% if page.title == 'Introduction' %}class="active" {% endif %}><a href="/doc">Introduction</a></li>
-              <li {% if page.title == 'Installation' %}class="active" {% endif %}><a href="/doc/Installation.html">Installation</a></li>
-              <li {% if page.title == 'Feature Tour' %}class="active" {% endif %}><a href="/doc/Feature-tour.html">Feature tour</a></li>
+              <li {% if page.title == 'Introduction' %}class="active" {% endif %}><a href="/doc">Введение</a></li>
+              <li {% if page.title == 'Installation' %}class="active" {% endif %}><a href="/doc/Installation.html">Установка</a></li>
+              <li {% if page.title == 'Feature Tour' %}class="active" {% endif %}><a href="/doc/Feature-tour.html">Обзор возможностей</a></li>
             </ul>
           </li>
           <li>
-            <b>Reference</b>
+            <b>Справка</b>
             <ul class="nav">
-              <li {% if page.title == 'Routes' %}class="active" {% endif %}><a href="/doc/Routes.html">Routes</a></li>
-              <li {% if page.title == 'Interceptors' %}class="active" {% endif %}><a href="/doc/Interceptors.html">Interceptors</a></li>
-              <li {% if page.title == 'Error Handlers' %}class="active" {% endif %}><a href="/doc/Error-handlers.html">Error handlers</a></li>
-              <li {% if page.title == 'Groups' %}class="active" {% endif %}><a href="/doc/Groups.html">Groups</a></li>
+              <li {% if page.title == 'Routes' %}class="active" {% endif %}><a href="/doc/Routes.html">Маршруты</a></li>
+              <li {% if page.title == 'Interceptors' %}class="active" {% endif %}><a href="/doc/Interceptors.html">Перехватчики</a></li>
+              <li {% if page.title == 'Error Handlers' %}class="active" {% endif %}><a href="/doc/Error-handlers.html">Слушатели событий</a></li>
+              <li {% if page.title == 'Groups' %}class="active" {% endif %}><a href="/doc/Groups.html">Группы</a></li>
               <li {% if page.title == 'Dependency Injection' %}class="active" {% endif %}><a href="/doc/Dependency-Injection.html">Dependency injection</a></li>
-              <li {% if page.title == 'Importing Libraries' %}class="active" {% endif %}><a href="/doc/Importing-libraries.html">Importing libraries</a></li>
-              <li {% if page.title == 'Plugin API' %}class="active" {% endif %}><a href="/doc/Plugin-API.html">Plugin API</a></li>
+              <li {% if page.title == 'Importing Libraries' %}class="active" {% endif %}><a href="/doc/Importing-libraries.html">Импорт библиотек</a></li>
+              <li {% if page.title == 'Plugin API' %}class="active" {% endif %}><a href="/doc/Plugin-API.html">API плагинов</a></li>
               <li {% if page.title == 'Shelf Middlewares' %}class="active" {% endif %}><a href="/doc/Shelf-Middlewares.html">Shelf Middlewares</a></li>
-              <li {% if page.title == 'Unit Test' %}class="active" {% endif %}><a href="/doc/Unit-test.html">Unit test</a></li>
-              <li {% if page.title == 'Server Configuration' %}class="active" {% endif %}><a href="/doc/Server-Configuration.html">Server Configuration</a></li>
-              <li {% if page.title == 'Deploy' %}class="active" {% endif %}><a href="/doc/Deploy.html">Deploy</a></li>
+              <li {% if page.title == 'Unit Test' %}class="active" {% endif %}><a href="/doc/Unit-test.html">Тестирование</a></li>
+              <li {% if page.title == 'Server Configuration' %}class="active" {% endif %}><a href="/doc/Server-Configuration.html">Конфигурация сервера</a></li>
+              <li {% if page.title == 'Deploy' %}class="active" {% endif %}><a href="/doc/Deploy.html">Деплой</a></li>
             </ul>
           </li>
           <li>
-            <b>Plugins</b>
+            <b>Плагины</b>
             <ul class="nav">
               <li {% if page.title == 'redstone_mapper' %}class="active" {% endif %}><a href="/doc/redstone_mapper.html">redstone_mapper</a></li>
               <li {% if page.title == 'redstone_mapper_mongo' %}class="active" {% endif %}><a href="/doc/redstone_mapper_mongo.html">redstone_mapper_mongo</a></li>
@@ -52,18 +52,18 @@ layout: default
           <div class="col-xs-6">
             <div class="pull-right">
               {% if page.prev == null%}
-              <a href="#" class="btn btn-primary " role="button" disabled="disabled"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+              <a href="#" class="btn btn-primary " role="button" disabled="disabled"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
               {% else if %}
-              <a href="/doc/{{page.prev}}.html" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Back</a>
+              <a href="/doc/{{page.prev}}.html" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Назад</a>
               {% endif %}
             </div>
           </div>
           <div class="col-xs-6">
             <div class="pull-left">
               {% if page.next == null%}
-              <a href="#" class="btn btn-primary" role="button" disabled="disabled">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
+              <a href="#" class="btn btn-primary" role="button" disabled="disabled">Вперед <span class="glyphicon glyphicon-arrow-right"></span></a>
               {% else if %}
-              <a href="/doc/{{page.next}}.html" class="btn btn-primary" role="button">Next <span class="glyphicon glyphicon-arrow-right"></span></a>
+              <a href="/doc/{{page.next}}.html" class="btn btn-primary" role="button">Вперед <span class="glyphicon glyphicon-arrow-right"></span></a>
               {% endif %}
             </div>
           </div>
