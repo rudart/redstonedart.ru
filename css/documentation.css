@@ -1,0 +1,36 @@
+.sidebar .sidenav {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar .nav {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sidebar .nav li a {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #999;
+  padding: 4px 20px;
+}
+
+.sidebar .nav>.active>a, .sidebar .nav>.active:hover>a, .sidebar .nav>.active:focus>a {
+  padding-left: 18px;
+  font-weight: 700;
+  color: rgba(204, 49, 0, 0.94);
+  background-color: transparent;
+  border-left: 2px solid rgba(204, 49, 0, 0.94);
+}
+
+.section-title {
+  margin-top: 15px;
+}
+
+.section-footer {
+  margin-top: 25px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}

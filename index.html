@@ -1,0 +1,81 @@
+---
+layout: default
+menu_item: index
+---
+
+<div class="jumbotron header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>Redstone.dart</h1>
+        <p>Серверный микрофреймворк на Dart</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default feature-panel">
+        <div class="panel-heading">Просто и понятно</div>
+        <div class="panel-body">
+          <b>Redstone.dart</b> allows you to easily publish your functions and classes through a web interface, by just adding some annotations to them.
+          
+          <div class="highlight"><pre><code class="dart"><span class="k">import</span> <span class="s1">&#39;package:redstone/server.dart&#39;</span> <span class="k">as</span> <span class="n">app</span><span class="p">;</span>
+
+<a href="#" class="dart-popover" data-toggle="popover" title="@Route" data-html="true" data-trigger="hover focus" data-content="Use the @Route annotation to bind a function with an URL.">@app.Route</a><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="n">helloWorld</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="s2">&quot;Hello, World!&quot;</span><span class="p">;</span>
+
+<span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">app</span><span class="p">.</span><span class="n">setupConsoleLog</span><span class="p">();</span>
+  <span class="n">app</span><span class="p">.</span><span class="n">start</span><span class="p">();</span>
+<span class="p">}</span></code></pre></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default feature-panel">
+        <div class="panel-heading">Мощно</div>
+        <div class="panel-body">
+          Includes support for <b>request interceptors</b>, <b>error handlers</b>, <b>dependency injection</b> and <a href="/doc/Feature-tour.html"> many other features</a>.
+          <div class="highlight"><pre><code class="dart"><a href="#" class="dart-popover" data-toggle="popover" title="@Interceptor" data-html="true" data-trigger="hover focus" data-content="Use the @Interceptor annotation to define a request interceptor.">@app.Interceptor</a><span class="p">(</span><span class="s1">r&#39;/admin/.*&#39;</span><span class="p">)</span>
+<span class="n">adminFilter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">session</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">chain</span><span class="p">.</span><span class="n">next</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">chain</span><span class="p">.</span><span class="n">interrupt</span><span class="p">(</span><span class="nl">statusCode:</span> <span class="n">HttpStatus</span><span class="p">.</span><span class="n">UNAUTHORIZED</span><span class="p">);</span>
+    <span class="c1">//or app.redirect(&quot;/login.html&quot;);</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+          <div class="highlight"><pre><code class="dart"><a href="#" class="dart-popover" data-toggle="popover" title="@ErrorHandler" data-trigger="hover focus" data-content="Use the @ErrorHandler annotation to define an error handler.">@app.ErrorHandler</a><span class="p">(</span><span class="m">404</span><span class="p">)</span>
+<span class="n">handleNotFoundError</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="n">app</span><span class="p">.</span><span class="n">redirect</span><span class="p">(</span><span class="s2">&quot;/error/not_found.html&quot;</span><span class="p">);</span></code></pre></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default feature-panel">
+        <div class="panel-heading">Легко тестировать</div>
+        <div class="panel-body">
+          Easily test your server, without the need of an external tool.
+          <div class="highlight"><pre><code class="dart"><span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="n">setUp</span><span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">setUp</span><span class="p">);</span>
+
+  <span class="n">tearDown</span><span class="p">(</span><span class="n">app</span><span class="p">.</span><span class="n">tearDown</span><span class="p">);</span>
+
+  <span class="n">test</span><span class="p">(</span><span class="s2">&quot;service&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <a href="#" class="dart-popover" data-toggle="popover" title="MockRequest" data-html="true" data-trigger="hover focus" data-content="To test your code, just create and dispatch a MockRequest.">MockRequest</a><span class="p">(</span><span class="s2">&quot;/service&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">app</span><span class="p">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">req</span><span class="p">).</span><span class="n">then</span><span class="p">((</span><span class="n">resp</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">statusCode</span><span class="p">,</span> <span class="n">equals</span><span class="p">(</span><span class="m">200</span><span class="p">));</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">mockContent</span><span class="p">,</span> <span class="n">equals</span><span class="p">(</span><span class="s2">&quot;ok&quot;</span><span class="p">));</span>
+    <span class="p">});</span>
+  <span class="p">})</span>
+
+<span class="p">}</span></code></pre></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
