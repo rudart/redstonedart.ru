@@ -1,23 +1,24 @@
 ---
 layout: doc
 menu_item: doc
-title: Installation
+title: Установка
 prev: index
 next: Feature-tour
 ---
-Redstone.dart is available as a package at [pub](http://pub.dartlang.org/). So, all you have to do is add it as a dependency to your app.
 
-* Create a new Dart package ([manually](http://pub.dartlang.org/doc/) or through Dart Editor)
-* Add Redstone.dart as a dependency in `pubspec.yaml` file
+Redstone.dart доступен как пакет [pub](http://pub.dartlang.org/). Поэтому, для установки Redstone его нужно просто добавить в зависимости приложения.
+
+* Создайте новый пакет Dart ([вручную](http://pub.dartlang.org/doc/) или с помощью Dart Editor)
+* Добавьте Redstone.dart как зависимость в `pubspec.yaml'
 
 ```
 name: my_app
  dependencies:
    redstone: any
 ```
-- Run `pub get` to update dependencies
-- Create a `bin` directory
-- Create a `server.dart` file under the `bin` directory
+- Выполните команду `pub get` для обновления зависимостей
+- Создайте директорию `bin`
+- Создайте файл `server.dart` в папке `bin`
 
 ```dart
 
@@ -33,7 +34,7 @@ main() {
 
 ```
 
-- To run the server, create a launch configuration in Dart Editor, or use the `dart` command:
+- Для запуска сервера создайте конфигурацию в Dart Editor, или используйте команду:
 
 ```
 $ dart bin/server.dart
@@ -41,4 +42,4 @@ INFO: 2014-02-24 13:16:19.086: Configured target for / [GET] : .helloWorld
 INFO: 2014-02-24 13:16:19.121: Running on 0.0.0.0:8080
 ```
 
-- Now head over to http://127.0.0.1:8080/, and you should see your hello world greeting.
+- Теперь зайдите сюда http://127.0.0.1:8080/. Вы должны будете увидеть надипись "Hello, World!".
