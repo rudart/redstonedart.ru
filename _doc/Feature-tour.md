@@ -1,34 +1,34 @@
 ---
 layout: doc
 menu_item: doc
-title: Feature Tour
+title: Обзор возможностей
 prev: Installation
 next: Routes
 ---
-##Routes
+## Маршруты
 
-To bind a function with an URL, just use the `@Route` annotation
+Для привязки URL к функции используйте нотацию `@Route`
 
 ```dart
 @app.Route("/")
 helloWorld() => "Hello, World!";
 ```
 
-Redstone.dart will serialize the returned value for you. So, if your function returns a `List` or a `Map`, the client receives a JSON object:
+Redstone.dart сериализует результат функции автоматически. Если функция возвратит `List` или `Map`, то клиент получит JSON-объект:
 
 ```dart
 @app.Route("/user/find/:id")
 getUser(String id) => {"name": "User", "login": "user"};
 ```
 
-If your function depends on async operations, you can also return a `Future`
+Если функция зависит от выполнения асинхронной операции, можно вернуть `Future`
 
 ```dart
 @app.Route("/service")
 service() => doSomeAsyncOperation().then((_) => {"success": true});
 ```
 
-You can easily bind path segments and query parameters
+Можно легко получать сегменты пути и параметры запроса
 
 ```dart
 @app.Route("/user/find/:type")
@@ -37,7 +37,7 @@ findUsers(String type, @app.QueryParam() String name) {
 }
 ```
 
-You can also bind the request body
+Также можно получить тело запроса
 
 ```dart
 @app.Route("/user/add", methods: const [app.POST])
@@ -46,7 +46,7 @@ addUser(@app.Body(app.JSON) Map user) {
 }
 ```
 
-It's also possible to access the current request object
+Есть возможность получения доступа к текущему объекту запроса
 
 ```dart
 @app.Route("/service", methods: const [app.GET, app.POST])
@@ -65,9 +65,9 @@ service() {
 };
 ```
 
-##Interceptors
+## Перехватчики
 
-Interceptors are useful when you need to apply a common behavior to a group of targets (functions or static content). For example, you can create an interceptor to apply a security constraint or to manage a resource
+Перехватчики полезны когда нужно применить какое-то поведение к группе ссылок (функций или статическому контенту). Например. вы можете создать перехватчика для ограничения доступа или для создания ресурса (в примере это будет подключение к базе данных).
 
 ```dart
 @app.Interceptor(r'/admin/.*')
@@ -76,7 +76,7 @@ adminFilter() {
     app.chain.next();
   } else {
     app.chain.interrupt(statusCode: HttpStatus.UNAUTHORIZED);
-    //or app.redirect("/login.html");
+    //или app.redirect("/login.html");
   }
 }
 ```
@@ -95,9 +95,9 @@ find(@app.Attr() dbConn) {
 }
 ```
 
-##Error Handlers
+## Слушатели ошибок
 
-Use the `@ErrorHandler` annotation to register error handlers.
+Используйте аннотацию `@ErrorHandler` для регистрации слушателя ошибок
 
 ```dart
 @app.ErrorHandler(404)
@@ -112,9 +112,9 @@ handleServerError() {
 }
 ```
 
-##Groups
+## Группы
 
-You can use classes to group routes, interceptors and error handlers
+Вы можете использовать классы для группировки маршрутов, перехватчиков и слушателей ошибок
 
 ```dart
 @Group("/user")
@@ -135,7 +135,7 @@ class UserService {
 
 ## Dependency Injection
 
-Register one or more modules before calling `app.start()`
+Зарегистрируйте один или несколько модулей перед вызовом `app.start()`
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -154,7 +154,7 @@ main() {
 
 ```
 
-Routes, interceptors, error handlers and groups can require dependencies
+Маршруты, перехватчики, слушатели ошибок и группы могут подключать зависимости
 
 ```dart
 @app.Route('/service')
@@ -193,9 +193,9 @@ class Group {
 }
 ```
 
-### Unit tests
+### Тестирование
 
-You can easily create mock requests to test your server
+Вы легко можете создавать фиктивные запросы для проверки сервера
 
 ```dart
 library services;
@@ -216,18 +216,18 @@ import 'package:your_package_name/services.dart';
 
 main() {
 
-  //load handlers in 'services' library
+  // загрузим слушателей из библиотеки 'services'
   setUp(() => app.setUp([#services]));
   
-  //remove all loaded handlers
+  // удалим все загруженные слушатели
   tearDown(() => app.tearDown());
   
   test("hello service", () {
-    //create a mock request
+    // создадим запрос
     var req = new MockRequest("/user/luiz");
-    //dispatch the request
+    // отправим запрос
     return app.dispatch(req).then((resp) {
-      //verify the response
+      // проверим ответ
       expect(resp.statusCode, equals(200));
       expect(resp.mockContent, equals("hello, luiz"));
     });
