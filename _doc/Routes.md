@@ -1,33 +1,33 @@
 ---
 layout: doc
 menu_item: doc
-title: Routes
+title: Маршруты
 prev: Feature-tour
 next: Interceptors
 ---
-The `@Route` annotation is used to bind a function or method to an URL:
+Аннотация `@Route` используется для привязки URL к функции или методу:
 
 ```dart
 @app.Route("/")
 helloWorld() => "Hello, World!";
 ```
 
-The returned value will be serialized to the client according to its type. For example, if the value is a String, the client will receive a *text/plain* response.
+Значение, которое вернет функция будет сериализовано в соответствии с его типом. Например, если результатом функции будет строка, то клиент получит ответ в *text/plane*.
 
-Returned Value | Response type
+Тип результата | Тип ответа
 ---------------|---------------
 String         | text/plain
 Map or List    | application/json
-File           | (MimeType of the file)
+File           | (MimeType файла)
 
-If a Future is returned, then the framework will wait for its completion. 
+Если функция вернет `Future`, то фреймворк дождется его выполнения.
 
 ```dart
 @app.Route("/")
 helloWorld() => new Future(() => "Hello, World!");
 ```
 
-If you need to respond the request with a status code different than 200, you can return or throw an `ErrorResponse`;
+Если вам нужно ответить на запрос кодом состояния, отличным от 200, то вы можете вернуть или сбросить `ErrorResponse`:
 
 ```dart
 @app.Route("/user/:id")
@@ -38,7 +38,7 @@ getUser(int id) {
   ...
 }
 ```
-You can also build a response using [Shelf](http://pub.dartlang.org/packages/shelf).
+Также вы можете построить ответ, используя [Shelf](http://pub.dartlang.org/packages/shelf).
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -47,27 +47,28 @@ import 'package:shelf/shelf.dart' as shelf;
 @app.Route("/")
 helloWorld() => new shelf.Response.ok("Hello, World!");
 ```
-For other types, Redstone.dart will convert the value to a String, and send it as *text/plain*.
 
-Also, it's possible to override the content type of the response:
+Остальные типы Redstone.dart сконвертирует в строку и отправит ответ в *text/plain*.
+
+Есть возможность явно указать тип ответа:
 
 ```dart
 @app.Route("/", responseType: "text/xml")
 getXml() => "<root><node>text</node></root>";
 ```
 
-## Parameters
+## Параметры
 
-### Path segments
+### Сегмент пути
 
-It's possible to bind path segments with arguments:
+Можно связывать параметр с сегментом пути:
 
 ```dart
 @app.Route("/user/:username")
 helloUser(String username) => "hello $username";
 ```
 
-The argument doesn't need to be a String. If it's an int, for example, the framework will try to convert the value for you (if the conversion fails, a 400 status code is sent to the client).
+Аргумент не обязательно должен быть строкой. Например, если аргумент - целое число, то фреймворк попробует автоматически конвертировать значение в число (если конвертировать значение не получится, то клиенту будет сброшена ошибка 400).
 
 ```dart
 @app.Route("/user/:username/:addressId")
@@ -76,11 +77,11 @@ getAddress(String username, int addressId) {
 };
 ```
 
-The supported types are: int, double and bool
+Поддерживаемые типы: `int`, `double` и `bool`.
 
-### Query parameters
+### Параметры запроса
 
-Use the `@QueryParam` annotation to access a query parameter
+Для доступа к параметрам запроса используйте аннотацию `@QueryParam`
 
 ```dart
 @app.Route("/user")
@@ -89,11 +90,11 @@ getUser(@app.QueryParam("id") int userId) {
 };
 ```
 
-Like path parameters, the argument doesn't need to be a String. 
+Как и в параметрах, которые передаются как часть пути, параметр запроса не обязательно должен быть строкой.
 
-### Request body
+### Тело запроса
 
-You can access the request body as a form, json or text
+Вы можете получить доступ к телу запроса (форма, json или простой текст)
 
 ```dart
 @app.Route("/adduser", methods: const [app.POST])
@@ -109,7 +110,7 @@ addUser(@app.Body(app.FORM) Map form) {
 };
 ```
 
-For json and form, you can request the body as a `QueryMap`, which allows the use of the dot notation
+Для json и форм есть возможность получить тело запроса как объект `QueryMap`, который позволит получить доступ к элементам через точку.
 
 ```dart
 @app.Route("/adduser", methods: const [app.POST])
@@ -119,16 +120,16 @@ addUser(@app.Body(app.JSON) QueryMap json) {
 };
 ```
 
-## HTTP Methods
+## HTTP-методы
 
-By default, a route only responds to GET requests. You can change that with the `methods` arguments:
+По умолчанию, маршрут реагирует только на GET-запрос. Вы можете изменить это с помощью параметра `methods`:
 
 ```dart
 @app.Route("/user/:username", methods: const [app.GET, app.POST])
 helloUser(String username) => "hello $username";
 ```
 
-It's also possible to define multiple routes to the same path and different HTTP methods:
+Также можно сделать так, что по одному пути будут отрабатывать разные методы, в зависимоти от HTTP-метода:
 
 ```dart
 @app.Route("/user", methods: const [app.GET])
@@ -142,9 +143,9 @@ postUser(@app.Body(app.JSON) Map user) {
 };
 ```
 
-## Multipart requests (file uploads)
+## Multipart-запросы (загрузка файлов)
 
-By default, Redstone.dart will refuse any multipart request. If your method needs to receive a multipart request, you can set `Route.allowMultipartRequest = true`. Example:
+По-умолчанию, Redstone.dart сбросит любой multipart-запрос. Если ваш метод должен принять multipart-запрос, то укажите `Route.allowMultipartRequest = true`. Пример:
 
 ```dart
 @app.Route("/adduser", methods: const [app.POST], allowMultipartRequest: true)
@@ -157,9 +158,9 @@ addUser(@app.Body(app.FORM) Map form) {
 };
 ```
 
-## Matching sub paths
+## Совпадение подпутей
 
-If you set `Route.matchSubPaths = true`, then the route will matches requests which path starts with the URL pattern. Example:
+Если установить `Route.matchSubPaths = true`, то маршрут будет обрабатывать запросы, пути которых начинаются с указанного паттерна URL. Пример:
 
 ```dart
 @app.Route('/path', matchSubPaths: true)
@@ -173,9 +174,9 @@ serviceB() {
 }
 ```
 
-If a request for `/path/subpath` is received, then `serviceB` is executed, but if a request for `/path/another_path` is received, `service` is executed.
+Если принят запрос на `/path/subpath`, то будет выполнена функция `serviceB`; но если принят запрос `/path/another_path`, то будет выполнена функция `service`.
 
-Also, you can assign the requested sub path to a parameter, adding a trailing `*` character to the url template. Example:
+Также вы можете связать подпуть запроса с параметром, добавив в конце шаблона URL символ `*`. Пример:
 
 ```dart
 @app.Route('/service/:path*', matchSubPaths: true)
@@ -184,9 +185,9 @@ service(String path) {
 }
 ```
 
-## The request object
+## Объект запроса
 
-You can use the global `request` object to access the request's information and content:
+Вы можете использовать глобальный объект `request` для доступа к информации о запросе и к его контенту:
 
 ```dart
 @app.Route("/user", methods: const [app.GET, app.POST])
@@ -205,11 +206,11 @@ user() {
 };
 ```
 
-Each request is tied to its own [Zone](https://www.dartlang.org/articles/zones/), so it's also safe to access the request object in async operations.
+Каждый запрос связан со своей собственной [зоной (Zone)](https://www.dartlang.org/articles/zones/), поэтому можно безопасно получить доступ к объекту запроса в асинхронных операциях.
 
-## The response object
+## Объект ответа
 
-Sometimes, you need to directly build a HTTP response, or inspect and modify a response created by another handler (a route, interceptor or error handler). For those cases, you can rely on the `response` object, which points to the last response created for the current request. Example:
+Иногда нужно вручную создать HTTP-ответ, или проверить и изменить ответ, созданный другим обработчиком (маршрутом, перехватчиком или слушателем ошибок). В таких случаях можно обратиться к объекту `response`, который указывает на созданный ответ для данного запроса. Пример:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -224,7 +225,7 @@ interceptor() {
 }
 ```
 
-Also, if you are building a response inside a **chain callback**, **route** or **error handler**, you can just return it:
+Если вы строите ответ внутри **chain callback**, **маршрута** или **обработчика ошибок**, то вы можете просто вернуть объект `request`, без присвоения:
 
 ```dart
 import 'package:redstone/server.dart' as app;
