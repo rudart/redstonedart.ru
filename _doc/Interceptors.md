@@ -1,21 +1,21 @@
 ---
 layout: doc
 menu_item: doc
-title: Interceptors
+title: Перехватчики
 prev: Routes
 next: Error-handlers
 ---
-The `@Interceptor` annotation is used to define an interceptor:
+Используйте аннотацию `@Interceptor` для определения перехватчика:
 
 ```dart
 @app.Interceptor(r'/.*')
 handleResponseHeader() {
   if (app.request.method == "OPTIONS") {
-    //overwrite the current response and interrupt the chain.
+    // изменим текущий ответ и прервем цепочку
     app.response = new shelf.Response.ok(null, headers: _createCorsHeader());
     app.chain.interrupt();
   } else {
-    //process the chain and wrap the response
+    // продолжим выполнение цепочки и изменим ответ
     app.chain.next(() => app.response.change(headers: _createCorsHeader()));
   }
 }
@@ -23,9 +23,9 @@ handleResponseHeader() {
 _createCorsHeader() => {"Access-Control-Allow-Origin": "*"};
 ```
 
-## The chain object
+## Объект цепочки (chain)
 
-Each request is actually a chain, composed by 0 or more interceptors, and a route. An interceptor is a structure that allows you to apply a common behavior to a group of targets. For example, you can use an interceptor to apply a security constraint, or to manage a resource:
+Каждый запорс представляет из себя цепочку, в которой 0 или более перехватчиков и один маршрут. Перехватчики - это структура, которая позволяет применить определенное поведение к ряду ссылок. Например, вы можете использовать перехватчик для ограничения доступа, или управления ресурсом:
 
 ```dart
 @app.Interceptor(r'/admin/.*')
@@ -34,7 +34,7 @@ adminFilter() {
     app.chain.next();
   } else {
     app.chain.interrupt(statusCode: HttpStatus.UNAUTHORIZED);
-    //or app.redirect("/login.html");
+    // или app.redirect("/login.html");
   }
 }
 ```
@@ -53,11 +53,11 @@ find(@app.Attr() dbConn) {
 }
 ```
 
-When a request is received, the framework will execute all interceptors that matches the URL, and then will look for a valid route. If a route is found, it will be executed.
+Когда запрос принят, фреймворк запустит всех перехватчиков, которые совпадают с URL, а затем поищет подходящий маршрут. Если маршрут будет найден, то связанная с ним функция или метод выполнится.
 
-Each interceptor must call the `chain.next()` or `chain.interrupt()` methods, otherwise, the request will be stuck. The `chain.next()` method can receive a callback, that is executed when the target completes. All callbacks are executed in the reverse order they are created. If a callback returns a `Future`, then the next callback will execute only when the future completes.
+Каждый перехватчик должен вызвать методы `chain.next()` или `chane.interrupt()`, иначе запрос не пройдет дальше. Метод `chane.next()`, может принять `callback`, который выполнится после обработки запроса. Все обратные вызовы будут выполнены в обратном их созданию порядке. Если `callback` вернет `Future`, то следующий обратный вызов выполнится только после выполнения `Future`.
 
-For example, consider this script:
+Посмотрите следующий пример:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -92,7 +92,7 @@ main() {
 }
 ```
 
-When you access http://127.0.0.1:8080/, the result is:
+Когда вы зайдете сюда: http://127.0.0.1:8080/; то увидите:
 
 ```
 interceptor 1 - before target
@@ -102,7 +102,7 @@ interceptor 2 - after target
 interceptor 1 - after target
 ```
 
-It's also possible to verify if the target threw an error (if there is an error handler registered, it will be invoked before the callback):
+Также можно проверить, была ли брошена ошибка (если зарегистрирован обработчик ошибок, то он отработает перед вызовом `callback`):
 
 ```dart
 @app.Interceptor(r'/.*')
@@ -115,35 +115,35 @@ interceptor() {
 }
 ```
 
-## The request body
+## Тело запроса
 
-By default, Redstone.dart won't parse the request body until all interceptors are called. If your interceptor need to inspect the request body, you must set `parseRequestBody = true`. Example:
+По-умолчанию Redstone.dart не парсит тело запроса до тех пор, пока не отработают все перехватчики. Если ваш перехватчик должен поработать с телом запроса, то установите `parseRequestBody = true`. Пример:
 
 ```dart
 @app.Interceptor(r'/service/.+', parseRequestBody: true)
 verifyRequest() {
-  //if parseRequestBody is not setted, request.body is null
+  // если parseRequestBody не равен true, то request.body будет null
   print(app.request.body);
   app.chain.next();
 }
 
 ```
 
-## Controlling execution order
+## Контроль очереди выполнения
 
-You can control what order interceptors get executed by specifying chainIdx
+Вы можете контролировать, в каком порядке перехватчики будут вызваны, с помощью параметра `chainIdx`:
 
 ```dart
 
 @app.Interceptor("/.+", chainIdx: 0)
 interceptor() {
-  print("interceptor 2");
+  print("перехватчик 2");
   app.chain.next();
 }
 
 @app.Interceptor("/.+", chainIdx: 1)
 interceptor2() {
-  print("interceptor 3");
+  print("перехватчик 3");
   app.chain.next();
 }
 ```
