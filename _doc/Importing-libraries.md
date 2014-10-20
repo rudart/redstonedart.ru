@@ -1,17 +1,17 @@
 ---
 layout: doc
 menu_item: doc
-title: Importing Libraries
+title: Импорт библиотек
 prev: Dependency-Injection
 next: Plugin-API
 ---
-Redstone.dart recursively scans all libraries imported by your main script. Example:
+Redstone.dart рекурсивно сканирует все библиотеки, импортируемые вашим главным скриптом. Пример:
 
 - server.dart
 
 ```dart
 import 'package:redstone/server.dart' as app;
-//all handlers in services.dart will be installed
+// все слушатели, определенные в services.dart будут установлены
 import 'package:myapp/services.dart';
 
 main() {
@@ -30,11 +30,12 @@ findUser() {
 }
 ```
 
-However, sometimes you need more control on how handlers from other libraries are installed. In these cases, you can use the `@Install` annotation:
+Но иногда нужно иметь возможность управлять установкой обработчиков из других библиотек. В этом случае вы можете использовать аннотацию `@Install`:
 
 ```dart
 import 'package:redstone/server.dart' as app;
-//all handlers in services.dart will be installed under the '/services' path
+// все обработчики из services.dart, которые используют путь '/services' 
+// будут установлены
 @app.Install(urlPrefix: '/services')
 import 'package:myapp/services.dart';
 
@@ -44,7 +45,7 @@ main() {
 }
 ``` 
 
-If the library defines interceptors, you can control the execution order:
+Если библиотека определяет перехватчиков, то вы можете управлять очередью их выполнения:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -52,7 +53,7 @@ import 'package:redstone/server.dart' as app;
 @app.Install(chainIdx: 1)
 import 'package:myapp/services.dart';
 
-//this interceptor will be invoked first
+// этот перехватчик сработает первым
 @app.Interceptor("/.+", chainIdx: 0)
 interceptor() {
   print("interceptor 1");
@@ -82,11 +83,11 @@ interceptor2() {
 }
 ```
 
-If you want to import a library, but don't need its handlers, you can use the `@Ignore` annotation:
+Если вы хотите импортировать библиотеку, но не использовать ее обработчики, то используйте аннотацию `@Ignore`:
 
 ```dart
 import 'package:redstone/server.dart' as app;
-//handlers defined in services.dart won't be installed
+// обработчики из services.dart не будут установлены
 @app.Ignore()
 import 'package:myapp/services.dart';
 
@@ -96,7 +97,7 @@ main() {
 }
 ``` 
 
-A library is installed only once. So, if you import the same library in different files, its handlers won't be installed twice:
+Библиотека устанавливается только один раз. Поэтому, если вы импортируете одну библиотеку в нескольких файлах, то ее обработчики будут установлены только один раз:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -135,7 +136,8 @@ serviceB() {
 - lib_c.dart
 
 ```dart
-//lib_c is imported by lib_a and lib_b, but its handlers are installed only once.
+// lib_c импортируется в файлах lib_a и lib_b, но ее обработчики будут
+// установлены только один раз
 library lib_c;
 import 'package:redstone/server.dart' as app;
 
