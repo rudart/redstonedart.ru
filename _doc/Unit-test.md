@@ -1,19 +1,19 @@
 ---
 layout: doc
 menu_item: doc
-title: Unit Test
+title: Тестирование
 prev: Shelf-Middlewares
 next: Server-Configuration
 ---
-Basically, to create a test, you just need to:
+Чтобы создать тест, вы должны:
 
-* Call `setUp()` to load your handlers
-* Create a `MockRequest`
-* Call `dispatch()` to send your request
-* Inspect the returned response
-* Call `tearDown()` to unload your handlers 
+* Вызвать `setUp()` для загрузки обработчиков
+* Создать `MockRequest`
+* Вызвать `dispatch()` для выполнения запроса
+* Изучить ответ
+* Вызвать `tearDown()` для удаления обработчиков
 
-Example:
+Пример:
 
 ```dart
 library services;
@@ -34,18 +34,18 @@ import 'package:your_package_name/services.dart';
 
 main() {
 
-  //load handlers in 'services' library
+  // загружаем обработчики из библитеки 'services'
   setUp(() => app.setUp([#services]));
   
-  //remove all loaded handlers
+  // Удалим все обработчики
   tearDown(() => app.tearDown());
   
   test("hello service", () {
-    //create a mock request
+    // создадим запрос
     var req = new MockRequest("/user/luiz");
-    //dispatch the request
+    // отправим запрос
     return app.dispatch(req).then((resp) {
-      //verify the response
+      // проверим ответ
       expect(resp.statusCode, equals(200));
       expect(resp.mockContent, equals("hello, luiz"));
     });
@@ -54,21 +54,21 @@ main() {
 }
 ```
 
-## MockRequest Examples
+## Примеры MockRequest
 
-* GET request: /service
+* GET-запрос: /service
 
 ```dart
 var req = new MockRequest("/service");
 ```
 
-* GET request: /service?param=value
+* GET-запрос: /service?param=value
 
 ```dart
 var req = new MockRequest("/service", queryParams: {"param": "value"});
 ```
 
-* POST request: /service, JSON data
+* POST-запрос: /service, JSON data
 
 ```dart
 var req = new MockRequest("/service", method: app.POST, bodyType: app.JSON, body: {
@@ -77,7 +77,7 @@ var req = new MockRequest("/service", method: app.POST, bodyType: app.JSON, body
 });
 ```
 
-* POST request: /service, FORM data
+* POST-запрос: /service, FORM data
 
 ```dart
 var req = new MockRequest("/service", method: app.POST, bodyType: app.FORM, body: {
@@ -86,7 +86,7 @@ var req = new MockRequest("/service", method: app.POST, bodyType: app.FORM, body
 });
 ```
 
-* POST request: /service, FORM data, multipart request
+* POST-запрос: /service, FORM data, multipart-запрос
 
 ```dart
 import "dart:convert";
@@ -104,7 +104,7 @@ var req = new MockRequest("/service", method: app.POST, bodyType: app.FORM, body
 });
 ```
 
-* Mocking a session
+* Устанавливаем сессию
 
 ```dart
 var req = new MockRequest("/service", 
