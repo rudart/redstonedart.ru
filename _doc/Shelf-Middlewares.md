@@ -5,18 +5,19 @@ title: Shelf Middlewares
 prev: Plugin-API
 next: Unit-test
 ---
-Since v0.5, Redstone.dart is built around the [Shelf](http://pub.dartlang.org/packages/shelf) framework. That means you can use any Shelf middleware or handler in your app:
+С версии 0.5 Redstone.dart базируется на фреймворке [Shelf](http://pub.dartlang.org/packages/shelf). Это означает, что вы можете использовать Shelf-middleware или его обработчики в Вашем приложении:
 
 ```dart
 
 main() {
-  //Middlewares registered with addShelfMiddleware() will be invoked before
-  //any interceptor or route.
+  // Middleware, зарегистрированные с помощью функции addShelfMiddleware() 
+  // будут вызваны перед перехватчиками и маршрутами
   app.addShelfMiddleware(...);
   app.addShelfMiddleware(...);
   
-  //The handler registered with setShelfHandler() will be invoked when all
-  //interceptors are completed, and there is no route for the requested URL.
+  // Обработчики, зарегистрированные с помощью функции setShelfHandler()
+  // будут вызваны после отработки всех перехватчиков и когда для указанного
+  // URL не будет найден маршрут
   app.setShelfHandler(...);
 
   app.setupConsoleLog();
@@ -26,7 +27,7 @@ main() {
 
 ```
 
-For example, you can use [shelf_static](http://pub.dartlang.org/packages/shelf_static) to serve static files:
+Например, вы можете использовать [shelf_static](http://pub.dartlang.org/packages/shelf_static) для работы со статическими файлами:
 
 ```dart
 import 'package:redstone/server.dart' as app;
