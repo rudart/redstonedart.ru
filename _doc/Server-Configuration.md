@@ -1,24 +1,24 @@
 ---
 layout: doc
 menu_item: doc
-title: Server Configuration
+title: Конфигурация сервера
 prev: Unit-test
 next: Deploy
 ---
-If you invoke the `start()` method with no arguments, the server will be configured with default values:
 
-Argument       | Default Value
----------------|---------------
+Если вызвать метод `start()` без параметров, то сервер будет запущен со стандартными параметрами:
+
+Параметр       | Стандартное значение
+---------------|---------------------
 host           | "0.0.0.0"
 port           | 8080
 protocol       | http
 
-## Secure connections (https)
+## Безопасное соединение (https)
 
-In order to start a secure server (https), you should specify the optional `secureOptions` argument
-when calling the `start ()` method.
+Чтобы запустить https-сервер, вы должны указать необязательный параметр `secureOptions` в вызове функции `start()`.
 
-The `secureOptions` is a `Map<Symbol, dynamic>` that will be forwarded to the [`HttpServer.bindSecure()`](https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/dart-io.HttpServer#id_bindSecure) method:
+Параметр `secureOptions` имеет тип `Map<Symbol, dynamic>`. Этот параметр будет передан методу [`HttpServer.bindSecure()`](https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/dart-io.HttpServer#id_bindSecure):
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -29,11 +29,11 @@ main() {
 }
 ```
 
-See the [`https.dart`](https://github.com/luizmineo/redstone.dart/blob/master/example/https.dart) for a working example.
+Рабочий пример можно посмотреть здесь: [`https.dart`](https://github.com/luizmineo/redstone.dart/blob/master/example/https.dart).
 
-## Static Files
+## Статичные файлы
 
-If you need to serve static files, you can use the [shelf_static](http://pub.dartlang.org/packages/shelf_static) package:
+Если вам нужно обрабатывать статичные файлы, то можете использовать пакет [shelf_static](http://pub.dartlang.org/packages/shelf_static):
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -47,15 +47,15 @@ main() {
   app.start();
 }
 ```
-## Logging
+## Логи
 
-Redstone.dart provides a helper method to set a simple log handler, which outputs the messages to the console:
+Redstone.dart предоставляет вспомогательный метод для установки обработчика логов, который выводит сообщения на консоль:
 
 ```dart
 app.setupConsoleLog();
 ```
 
-By default, the log level is setted to INFO, which logs the startup process and errors. If you want to see all the log messages, you can set the level to ALL:
+По-умолчанию уровень логов установлен в `INFO`, который регистрирует процесс запуска и ошибки. Если вам нужно видеть все сообщения, то можете установить уровень в `ALL`:
 
 ```dart
 import 'package:logging/logging.dart';
@@ -67,7 +67,7 @@ main() {
 }
 ```
 
-If you want to output the messages to a different place (for example, a file), you can define your own log handler:
+Если вы хотите выводить сообщения в другое место (например, в файл), то можно определить свой обработчик логов:
 
 ```dart
 Logger.root.level = Level.ALL;
