@@ -1,11 +1,11 @@
 ---
 layout: doc
 menu_item: doc
-title: Groups
+title: Группы
 prev: Error-handlers
 next: Dependency-Injection
 ---
-The `@Group` annotation is used to define a group of routes, interceptors and error handlers:
+Аннотация `@Group` используется для определения группы маршрутов, перехватчиков и обработчиков ошибок:
 
 ```dart
 @Group("/user")
@@ -24,7 +24,9 @@ class UserService {
 }
 ```
 
-The prefix defined with the `@Group` annotation, will be prepended in every route and interceptor inside the group. If you need to directly bind to the group's path, you can use the `@DefaultRoute` annotation:
+Префикс, указанный в аннотации `@Group` будет подставлен в начало каждого маршрута и перехватчика внутри группы. Если вам нужно связать функцию с URL, который соответствует URL группы, то используйте аннотацию `@DefaultRoute`.
+
+В примере ниже мы определяем группу с URL `/user`. При GET-запросе на этот путь, мы выполним функцию `getUser()`; при POST-запросе, будет выполнена функция `postUser()`. Если к нам придет запрос вида `/user/:id`, то будет выполнена функция `getUserById(String id)`.
 
 ```dart
 @Group("/user")
