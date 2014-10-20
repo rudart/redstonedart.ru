@@ -1,13 +1,13 @@
 ---
 layout: doc
 menu_item: doc
-title: Dependency Injection
+title: Внедрение зависимостей
 prev: Groups
 next: Importing-libraries
 ---
-Redstone.dart uses the [di package](http://pub.dartlang.org/packages/di) to provide dependency injection.
+Для реализации внедрения зависимостей Redstone.dart использует [пакет di](http://pub.dartlang.org/packages/di).
 
-To register a module, use the `addModule()` method:
+Регистрация модуля осуществляется с помощью метода `addModule()`:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -26,7 +26,7 @@ main() {
 
 ```
 
-For methods annotated with `@Route`, you can inject objects using the `@Inject` annotation:
+В методы, у которых есть аннотация `@Route` можно внедрять зависимости с помощью аннотации `@Inject`:
 
 ```dart
 @app.Route('/service')
@@ -35,7 +35,7 @@ service(@app.Inject() ClassA objA) {
 }
 ```
 
-Groups can require objects using a constructor:
+Группы могут получать зависимости в конструкторе:
 
 ```dart
 @app.Group('/group')
@@ -53,7 +53,7 @@ class Group {
 }
 ```
 
-Interceptors and error handlers can also require dependencies:
+Перехватчики и слушатели ошибок тоже могут использовать зависимости:
 
 ```dart
 @app.Interceptor(r'/services/.+')
