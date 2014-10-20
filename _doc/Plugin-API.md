@@ -1,15 +1,15 @@
 ---
 layout: doc
 menu_item: doc
-title: Plugin API
+title: API плагинов
 prev: Importing-libraries
 next: Shelf-Middlewares
 ---
-Redstone plugins can dynamically create new routes, interceptors, error handlers, parameter providers and response processors.
+Плагины Redstone могут динамически создавать новые маршруты, перехватчиков, обработчиков событий, провайдеров параметров и обработчиков ответа.
 
-**Note: See [redstone_mapper](https://github.com/luizmineo/redstone_mapper) for a more complete serialization plugin**
+**Примечание: посмотрите [redstone_mapper](https://github.com/luizmineo/redstone_mapper) - это завершенный плагин для сериализации**
 
-For example, if your app often needs to convert from json data to Dart objects, like this:
+Например, если вашему приложению часто нужно конвертировать данные из json в объекты Dart, то можно делать что-то вроде этого:
 
 ```dart
 @app.Route("/user", methods: const[app.POST])
@@ -20,7 +20,7 @@ printUser(@app.Body() Map json) {
 }
 ```
 
-You can build a plugin to do this job for you. Example:
+Вы можете сделать плагин, который выполнит эту работу за вас. Пример:
 
 ```dart
 class FromJson {
@@ -34,7 +34,7 @@ FromJsonPlugin(app.Manager manager) {
   manager.addParameterProvider(FromJson, (metadata, type, handlerName, paramName, req, injector) {
     if (req.bodyType != app.JSON) {
       throw new app.RequestException(
-          "FromJson plugin - $handlerName", "content-type must be 'application/json'");
+          "FromJson плагни - $handlerName", "content-type должен быть 'application/json'");
     }
     
     ClassMirror clazz = reflectClass(type);
@@ -45,7 +45,7 @@ FromJsonPlugin(app.Manager manager) {
   
 }
 ```
-Now, if you install `FromJsonPlugin`, you can use the `@FromJson` annotation:
+Теперь, если вы установите плагин `FromJsonPlugin`, то сможете использовать аннотацию `@FromJson`:
 
 ```dart
 @app.Route("/user", methods: const[app.POST])
@@ -60,7 +60,7 @@ main() {
 }
 ```
 
-Besides, you can also build a plugin to convert from dart objects to json data:
+Кроме того, вы можете сделать плагин, который сконвертирует ваши объекты Dart в json:
 
 ```dart
 class ToJson {
