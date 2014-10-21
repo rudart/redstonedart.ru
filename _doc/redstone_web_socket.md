@@ -4,13 +4,11 @@ menu_item: doc
 title: redstone_web_socket
 prev: redstone_mapper_pg
 ---
-[redstone_web_socket](http://pub.dartlang.org/packages/redstone_web_socket) is a web socket plugin for [Redstone.dart](http://redstonedart.org). It uses the 
-[shelf_web_socket](http://pub.dartlang.org/packages/shelf_web_socket) package to create web socket handlers.
+[redstone_web_socket](http://pub.dartlang.org/packages/redstone_web_socket) - это веб-сокет плагин для Redstone.dart. Для создания обработчиков он использует пакет [shelf_web_socket](http://pub.dartlang.org/packages/shelf_web_socket).
 
-### Using @WebSocketHandler with functions
+### Использование @WebSocketHandler с функциями
 
-If a function is annotated with `@WebSocketHandler`, it'll be invoked with a [CompatibleWebSocket](https://api.dartlang.org/apidocs/channels/be/dartdoc-viewer/http_parser/http_parser.CompatibleWebSocket) object for
-every new established connection:
+Если у функции есть аннотация `@WebSocketHandler`, то она будет вызвана с объектом [CompatibleWebSocket](https://api.dartlang.org/apidocs/channels/be/dartdoc-viewer/http_parser/http_parser.CompatibleWebSocket) для каждого нового соединения:
 
 ```dart
 @WebSocketHandler("/ws")
@@ -21,10 +19,9 @@ onConnection(websocket) {
 }
 ```
 
-### Using @WebSocketHandler with classes
+### Использование @WebSocketHandler с классами
 
-If a class is annotated with `@WebSocketHandler`, the plugin will install a event listener for every method annotated 
-with `@OnOpen`, `@OnMessage`, `@OnError` and `@OnClose`:
+Если у класса есть аннотация `@WebSocketHandler`, то плагин установит слушателей событий на каждом методе с аннотациями `@OnOpen`, `@OnMessage`, `@OnError` и `@OnClose`:
 
 ```dart
 
@@ -56,12 +53,11 @@ class ServerEndPoint {
 
 ```
 
-Like redstone [groups](http://redstonedart.org/doc/Groups.html), the class will be instantiated only once, and it
-can request injectable objects with a constructor (see [dependency injection](http://redstonedart.org/doc/Dependency-Injection.html)).
+Подобно [группам](/doc/Groups.html), класс будет инициализирован только один раз и он может подключить зависимости в конструкторе ([внедрение зависимостей](/doc/Dependency-Injection.html)).
 
-### Installing handlers
+### Установка обработчиков
 
-To install web socket handlers, you just have to import `redstone_web_socket.dart` and call `getWebSocketPlugin()`:
+Для установки веб-сокет обработчиков, вам нужно просто импортировать `redstone_web_socket.dart` и вызвать `getWebSocketPlugin()`:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -70,16 +66,16 @@ import 'package:redstone_web_socket/redstone_web_socket.dart';
 void main() {
   app.setupConsoleLog();
   
-  //install web socket handlers
+  // устанавливаем обработчиков
   app.addPlugin(getWebSocketPlugin());
   
   app.start();
 }
 ```
 
-### Unit tests
+### Тестирование
 
-This package also provides a simple mock client, which can be used in unit tests:
+Этот пакет также предоставляет простого клиента, который может быть использован для тестирования:
 
 ```dart
 import 'package:redstone/server.dart' as app;
