@@ -266,10 +266,9 @@ redstone_mapper предоставляет следующие базовые п�
 
 Вы можете очень просто создавать новые правила, расширив класс `ValidationRule`.
 
-### Configuration
+### Настройка
 
-To install redstone_mapper as a Redstone.dart plugin, you just have to import `plugin.dart` and
-call `getMapperPlugin()`:
+Для установки redstone_mapper в качестве плагина Redstone.dart, вы должны импортировать `plugin.dart` и вызвать `getMapperPlugin()`:
 
 ```dart
 
@@ -282,8 +281,8 @@ import 'package:redstone_mapper/plugin.dart';
 
 main() {
 
-  //When using redstone_mapper as a Redstone.dart plugin,
-  //you can use the @Decode and @Encode annotations.
+  // Когда redstone_mapper используется как плагин Redstone.dart,
+  // тогда мы можем использовать аннотации @Decode и @Encode
   app.addPlugin(getMapperPlugin());
   
   app.setupConsoleLog();
@@ -292,13 +291,9 @@ main() {
 
 ```
 
-Also, if `getMapperPlugin()` receives an instance of `DatabaseManager`, then the plugin will manage
-the database connections for you. For more information, see one of the redstone_mapper extensions, such as
-[redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg) or 
-[redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo).
+Если `getMapperPlugin()` принимает объект `DatabaseManager`, то плагин будет управлять соединением с базой за вас. Для более подробной информации, посмотрите расширения этого плагина, например [redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg) или [redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo).
 
-To use with other server-side frameworks, or on the client side, you just have to import `mapper_factory.dart`
-and call `bootstrapMapper()` from the `main()` function:
+Для использование с другими серверными фреймворками, или для работы на клиентской стороне, вы можете просто импортировать `mapper_factory.dart` и вызвать `bootstrapMapper()` в функции `main()`:
 
 ```dart
 
@@ -313,7 +308,7 @@ main() {
 
 ```
 
-To encode and decode objects, you can use the `encode()` and `decode()` top level function from `mapper.dart`:
+Для кодирование и декодирования объектов вы можете использовать top-level функции `encode()` и `decode()`, которые определены в файле `mapper.dart`:
 
 ```dart
 
@@ -338,8 +333,7 @@ String userJson = JSON.encode(encode(user));
 
 ```
 
-When using on the client side, be sure to set redstone_mapper's transformer to your pubspec.yaml
-file, so dart2js won't generate a bloated javascript file:
+Когда вы используете redstone_mapper на серверной стороне, убедитесь, что прописали трансформер redstone_mapper в pubspec.yaml - благодаря этому dart2js не будет генерировать большой javascript-файл:
 
 ```
 name: my_app
