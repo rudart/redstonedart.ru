@@ -125,8 +125,7 @@ class User {
 
 ```
 
-When encoding or decoding an object to JSON, you can use the `view` parameter
-to map a class member to its corresponding JSON field:
+Когда кодируете или декодируете объект из/в JSON, тогда вы можете использовать параметр `view` для связки свойства объекта с соответствующим полем JSON:
 
 ```dart
 
