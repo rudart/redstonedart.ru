@@ -5,20 +5,19 @@ title: redstone_mapper_mongo
 prev: redstone_mapper
 next: redstone_mapper_pg
 ---
-[redstone_mapper_mongo](http://pub.dartlang.org/packages/redstone_mapper_mongo) is a MongoDB extension for [redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper).
+[redstone_mapper_mongo](http://pub.dartlang.org/packages/redstone_mapper_mongo) расширяет [redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper) и позволяет работать с MongoDB.
 
-This package is a wrapper for the [mongo_dart](https://github.com/vadimtsushko/mongo_dart) driver.
+Этот пакет работает вокруг [mongo_dart](https://github.com/vadimtsushko/mongo_dart).
 
-### Usage:
+### Использование:
 
-Create a `MongoDbManager` to manage connections with the database:
+Создайте `MongoDbManager` для управления коллекциями базы данных:
 
 ```dart
 var dbManager = new MongoDbManager("mongodb://localhost/dbname", poolSize: 3);
 ```
 
-If you are using redstone_mapper as a Redstone.dart plugin, you can pass a `MongoDbManager` to `getMapperPlugin()`, 
-so a database connection will be available for every request:
+Если вы используете redstone_mapper как плагин Redstone.dart, то можете передать `MongoDbManager` в `getMapperPlugin()`, что сделает соединение к базе данных доступным для каждого запроса:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -35,20 +34,20 @@ main() {
   
 }
 
-//redstone_mapper will create a "dbConn" attribute
-//for every request.
+// redstone_mapper создаст атрибут "dbConn"
+// для каждого запроса
 @app.Route("/services/users/list")
 listUsers(@app.Attr() MongoDb dbConn) =>
    dbConn.collection("users").find().toList();
    
-//If you prefer, you can also create a getter to access the
-//database connection of the current request, so
-//you don't need to add an extra parameter for every route.
+// Если хотите, то можете создать геттер для доступа
+// к соединению с базой для текущего запроса. Так вам не надо
+// будет добавлять дополнительный параметр в каждый роут
 MongoDb get mongoDb => app.request.attributes.dbConn;
 
 ```
 
-The `MongoDb` object is a wrapper that provides helper functions for encoding and decoding objects:
+Объект `MongoDb` предоставляет вспомогательные функции для кодирования и декодирования объектов:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -59,9 +58,9 @@ import 'package:redstone_mapper_mongo/metadata.dart';
 
 class User {
   
-  //@Id is a special annotation to handle the "_id" document field, 
-  //it instructs redstone_mapper to convert ObjectId values to String, 
-  //and vice versa.
+  // @Id - это специальная аннотация, которая берет поле "_id" документа
+  // и говорит redstone_mapper, чтобы тот сконвертировал значение ObjectId в
+  // строку и наоборот.
   @Id()
   String id;
 
@@ -78,21 +77,20 @@ MongoDb get mongoDb => app.request.attributes.dbConn;
 @app.Route("/services/users/list")
 @Encode()
 Future<List<User>> listUsers() => 
-  //query documents from the "users" collection, and decode
-  //the result to List<User>.
+  // Получим докуметны из коллекции "users", декодируем результат
+  // в List<User>
   mongoDb.find("users", User); 
 
 @app.Route("/services/users/add", methods: const[app.POST])
 Future addUser(@Decode() User user) => 
-  //encode user, and insert it in the "users" collection.
+  // запишем пользователя в коллекцию "users"
   mongoDb.insert("users", user);
 
 ```
 
-However, the `MongoDb` class doesn't hide the `mongo_dart` API. You can access a `DbCollection` with the `MongoDb.collection()` method. 
-Also, you can access the original connection object with the `MongoDb.innerConn` property.
+Класс `MongoDb` не скрывает API пакета `mongo_dart`. Вы можете получить `DbCollection` через метод `MongoDb.collections()`. Вы можете получить оригинальный объект соединения через свойство `MongoDb.innderConn`.
 
-Moreover, you can use a `MongoDbService` to handle operations that concerns the same document type:
+Вы можете использовать `MongoDbService` для проведения операций над документами одного типа:
 
 ```dart
 
@@ -107,7 +105,7 @@ Future addUser(@Decode() User user) => userService.insert(user);
 
 ```
 
-It's also possible to inherit from `MongoDbService`:
+Также можно расширить `MongoDbService`:
 
 ```dart
 @app.Group("/services/users")
@@ -125,5 +123,4 @@ Class UserService extends MongoDbService<User> {
 }
 ```
 
-`MongoDbService` will by default use the database connection associated with the current request. If you are not using
-Redstone.dart, be sure to use the `MongoDbService.fromConnection()` constructor to create a new service.
+`MongoDbService` по-умолчанию использует соединение, связанное с текущим запросом. Если вы не используете Redstone.dart, убедитесь, что создаете новый сервис через `MongoDbService.fromConnection()`.
