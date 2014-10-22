@@ -64,8 +64,7 @@ List<User> listUsers() {
 
 ### Аннотация @Field
 
-To properly encode and decode an object, its class must have every serializable member
-annotated with `@Field`.
+Чтобы верно кодировать и декодировать объект, класс этого объекта должен иметь у каждого сериализуемого свойства аннотацию `@Field`.
 
 ```dart
 
@@ -81,9 +80,7 @@ class User {
 
 ```
 
-It's important to always define the type of the class member, so
-it can be properly encoded and decoded. If the field is a List
-or a Map, be sure to specify its parameters. Example:
+Обязательно нужно указать тип свойства, т.к. основываясь на этой информации будет происходить кодирование и декодирование. Если тип поля `List` или `Map`, то убедитесь, что этот тип указан. Пример:
 
 ```dart
 
@@ -109,11 +106,9 @@ class Address {
 
 ```
 
-However, it's not recommended to use other classes that have
-type parameters, since it's not guaranteed that it will
-be properly encoded and decoded.
+Не рекомендуется использовать другие классы в качестве типов сериализуемых свойств, т.к. тогда не гарантируется правильное кодирование и декодирование объекта.
 
-It's also possible to annotate getters and setters:
+Также можно использовать аннотацию `@Field` с геттерами и сеттерами:
 
 ```dart
 class User {
@@ -147,8 +142,7 @@ class User {
 
 ```
 
-Also, if you are encoding or decoding an object to the database, you can use the `model`
-parameter to map a class member to its corresponding database field:
+Если вы записываете объект в базу данных, или получаете его из нее, то можете использовать параметр `model` для связки свойства класса с полем в базе данных:
 
 ```dart
 
@@ -165,8 +159,7 @@ class User {
 
 ```
 
-Besides, every class that can be encoded or decoded must provide
-a default constructor, with no required arguments. 
+Каждый класс, который может быть кодирован/декодирован должен иметь стандартный конструктор без обязательных параметров.
 
 ### Data validation
 
