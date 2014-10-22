@@ -5,21 +5,20 @@ title: redstone_mapper_pg
 prev: redstone_mapper_mongo
 next: redstone_web_socket
 ---
-[redstone_mapper_pg](http://pub.dartlang.org/packages/redstone_mapper_pg) is a PostgreSQL extension for [redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper).
+[redstone_mapper_pg](http://pub.dartlang.org/packages/redstone_mapper_pg) расширяет [redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper) и позволяет работать с PostgreSQL.
 
-This package is a wrapper for the [postgresql](https://github.com/xxgreg/postgresql) driver.
+Этот пакет работает с драйвером [postgresql](https://github.com/xxgreg/postgresql).
 
-### Usage:
+### Использование:
 
-Create a `PostgreSqlManager` to manage connections with the database:
+Создайте `PostgreSqlManager` для управления соединением с базой данных:
 
 ```dart
 var uri = "postgres://testdb:password@localhost:5432/testdb";
 var dbManager = new PostgreSqlManager(uri, min: 1, max: 3);
 ```
 
-If you are using redstone_mapper as a Redstone.dart plugin, you can pass a `PostgreSqlManager` to `getMapperPlugin()`, 
-so a database connection will be available for every request:
+Если вы используете redstone_mapper как плагин Redstone.dart, то можете передать `PostgreSqlManager` в `getMapperPlugin()`, что сделает соединение к базе данных доступным для каждого запроса:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -37,20 +36,20 @@ main() {
   
 }
 
-//redstone_mapper will create a "dbConn" attribute
-//for every request.
+// redstone_mapper создаст атрибут "dbConn"
+// для каждого запроса
 @app.Route("/services/users/list")
 listUsers(@app.Attr() PostgreSql dbConn) =>
    dbConn.innerConn.query("select * from users").toList();
    
-//If you prefer, you can also create a getter to access the
-//database connection of the current request, so
-//you don't need to add an extra parameter for every route.
+// Если хотите, то можете создать геттер для доступа
+// к соединению с базой для текущего запроса. Так вам не надо
+// будет добавлять дополнительный параметр в каждый роут
 PostgreSql get postgreSql => app.request.attributes.dbConn;
 
 ```
 
-The `PostgreSql` object is a wrapper that provides helper functions for encoding and decoding objects:
+Объект `PostgreSql` предоставляет вспомогательные функции для кодирования и декодирования объектов:
 
 ```dart
 import 'package:redstone/server.dart' as app;
@@ -76,22 +75,21 @@ PostgreSql get postgreSql => app.request.attributes.dbConn;
 @app.Route("/services/users/list")
 @Encode()
 Future<List<User>> listUsers() => 
-  //query users from the "user" table, and decode
-  //the result to List<User>.
+  // Получим докуметны из таблицы "users", декодируем результат
+  // в List<User>
   postgreSql.query("select * from user", User);
 
 @app.Route("/services/users/add", methods: const[app.POST])
 Future addUser(@Decode() User user) => 
-  //encode user, and insert it in the "user" table.
+  // запишем пользователя в таблицу "users"
   postgreSql.execute("insert into users (name, password) "
                      "values (@username, @password)", user);
 
 ```
 
-However, the `PostgreSql` class doesn't hide the `postgresql` API. You can access 
-the original connection object with the `PostgreSql.innerConn` property.
+Класс `PostgreSql` не скрывает API пакета `postgresql`. Вы можете получить оригинальный объект соединения через свойство `PostgreSql.innderConn`.
 
-Moreover, you can use a `PostgreSqlService` to handle operations that concerns the same entity type:
+Вы можете использовать `PostgreSqlService` для проведения операций над строками одной таблицы:
 
 ```dart
 
@@ -108,7 +106,7 @@ Future addUser(@Decode() User user) =>
 
 ```
 
-It's also possible to inherit from `PostgreSqlService`:
+Также можно расширить `PostgreSqlService`:
 
 ```dart
 @app.Group("/services/users")
@@ -126,5 +124,4 @@ Class UserService extends PostgreSqlService<User> {
 }
 ```
 
-`PostgreSqlService` will by default use the database connection associated with the current request. If you are not using
-Redstone.dart, be sure to use the `PostgreSqlService.fromConnection()` constructor to create a new service.
+`PostgreSqlService` по-умолчанию использует соединение, связанное с текущим запросом. Если вы не используете Redstone.dart, убедитесь, что создаете новый сервис через `PostgreSqlService.fromConnection()`.
