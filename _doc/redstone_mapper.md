@@ -350,21 +350,17 @@ transformers:
 
 Приложения Polymer обычно не имеют точки входа (в скриптах dart это функция `main`), поэтому вы должны сделать ее. Также, в точке входа должны импортироваться все библиотеки, которые содержат кодируемые классы, поэтому трансформер должен иметь возможность сопоставить их. Вы можете посмотреть рабочий пример, который использует Polymer и redstone_mapper [здесь](https://github.com/luizmineo/io_2014_contacts_demo).
 
-### Database integration
+### Интеграция с базой данных
 
-redstone_mapper provides integration with database drivers through extensions. Currently, the following extensions are available:
+redstone_mapper реализует интеграцию с базами данных через расширения. В настоящее время доступны следующие расширения:
 
-* [redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo): MongoDB extension for redstone_mapper.
-* [redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg): PostgreSQL extension for redstone_mapper.
+* [redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo): расширение redstone_mapper для MongoDB.
+* [redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg): расширение redstone_mapper для PostgreSQL.
 
-Note that redstone_mapper doesn't aim to be a full ORM/ODM framework. It just provides some helper functions to easily 
-encode and decode objects to the database. It won't generate database queries, neither hide the default driver API from you.
-That means you can use the redstone_mapper functions only when it's useful for you, and ignore it when it's just an extra overhead. 
+redstone_mapper не ставит перед собой цель полностью реализовать ORM/ODM -фреймворк. Он просто предоставляет некоторые вспомогательные функции для легкой записи объектов в базу данных и их извлечения оттуда. Он не генерирует запросы к базе дынных. Это означает, что вы можете использовать функции redstone_mapper только когда они нужны вам, и игнорировать, когда не нужны.
 
-#### What about other databases?
+#### Что насчет других баз данных?
 
-Dart already has support for several databases, including: MongoDb, Redis, CouchDb, MySql, PostgreSql, and so on. I'll try to provide new extensions over
-time, but if you are interested, you can help me on this task.
+Сейчас Dart поддерживает несколько баз данных, включая: MongoDb, Redis, CouchDb, MySql, PostgreSql и другие. Luiz Mineo постарается сделать расширения в ближайшее время, но если вы заинтересованы в более быстром их появлении, то можете ему помочь.
 
-Building a redstone_mapper extension is really easy, and you can start by taking a look at the source code of [redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg) and [redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo).
-If you are willing to build a externsion, please let me know :)
+Создавать расширения redstone_mapper безумно просто, и вы можете начать, взглянув на код [redstone_mapper_pg](https://github.com/luizmineo/redstone_mapper_pg) и [redstone_mapper_mongo](https://github.com/luizmineo/redstone_mapper_mongo). Если вы будете готовы написать расширение, то дайте знать Luiz Mineo об этом :)
