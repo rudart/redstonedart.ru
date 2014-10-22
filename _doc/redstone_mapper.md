@@ -346,12 +346,9 @@ transformers:
 
 ```
 
-### Integration with Polymer
+### Интеграция с Polymer
 
-Polymer applications usually doesn't have an entry-point (a dart script with the `main` function), so
-you have to provide one. Also, the entry-point has to import all libraries that contains encodable classes, 
-so the transformer will be able to map them. You can see a working example which uses 
-polymer and redstone_mapper [here](https://github.com/luizmineo/io_2014_contacts_demo).
+Приложения Polymer обычно не имеют точки входа (в скриптах dart это функция `main`), поэтому вы должны сделать ее. Также, в точке входа должны импортироваться все библиотеки, которые содержат кодируемые классы, поэтому трансформер должен иметь возможность сопоставить их. Вы можете посмотреть рабочий пример, который использует Polymer и redstone_mapper [здесь](https://github.com/luizmineo/io_2014_contacts_demo).
 
 ### Database integration
 
