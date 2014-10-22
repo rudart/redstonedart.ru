@@ -11,7 +11,7 @@ next: redstone_mapper_pg
 
 ### Использование:
 
-Создайте `MongoDbManager` для управления коллекциями базы данных:
+Создайте `MongoDbManager` для управления соединением с базой данных:
 
 ```dart
 var dbManager = new MongoDbManager("mongodb://localhost/dbname", poolSize: 3);
