@@ -5,16 +5,16 @@ title: redstone_mapper
 prev: Deploy
 next: redstone_mapper_mongo
 ---
-[redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper) is a set of utilities for handling common tasks in web applications, including:
+[redstone_mapper](http://pub.dartlang.org/packages/redstone_mapper) - это набор утилит для выполнения наиболее частых задач в веб-приложениях:
 
-* Encoding and decoding of objects to JSON.
-* Data validation.
-* Database connection management.
-* Encoding and decoding of objects to the database.
+* Кодирование/декодирование объектов в/из JSON
+* Валидация данных
+* Управление соединением с базой данных
+* Сохранение и извлечение объектов из/в БД
 
-Encoding and decoding of objects and data validation can also be used on the client side. redstone_mapper provides a pub transformer that prevents dart2js from generating a bloated javascript file.
+Кодирование/декодирование объектов и валидация данных также может быть использована на клиенте. **redstone_mapper** предоставляет трансформер pub, который предотвращает генерацию раздутых javascript-файлов dart2js.
 
-Example: Using redstone_mapper with Redstone.dart
+Пример: Использование redstone_mapper с Redstone.dart
 
 ```dart
 
@@ -24,8 +24,8 @@ import 'package:redstone_mapper/plugin.dart';
 
 main() {
 
-  //When using redstone_mapper as a Redstone.dart plugin,
-  //you can use the @Decode and @Encode annotations.
+  // Когда redstone_mapper используется как плагин Redstone.dart,
+  // тогда мы можем использовать аннотации @Decode и @Encode
   app.addPlugin(getMapperPlugin());
   
   app.setupConsoleLog();
@@ -34,8 +34,8 @@ main() {
 
 class User {
 
-  //The @Field annotation is used to specify
-  //the fields that can be serialized.
+  // Аннотация @Field используется для указания
+  // поля, которое может быть сериализовано
   @Field()
   String username;
 
@@ -44,16 +44,16 @@ class User {
   
 }
 
-//The @Decode annotation specifies that a parameter value
-//must be decoded from the request. By default, it will expect
-//that the request has a JSON body. 
+// Аннотация @Decode говорит, что значение параметра запроса
+// должно быть декодировано. В большинстве случаев это означает,
+// что тело запроса должно содержать JSON
 @app.Route('/services/users/add', methods: const[app.POST])
 addUser(@Decode() User user) {
   ...
 }
 
-//The @Encode annotation specifies that a route
-//response can be encoded to JSON.
+// Аннотация @Encode говорит, что ответ маршрута
+// должен быть закодирован в JSON
 @app.Route('/services/users/list')
 @Encode()
 List<User> listUsers() {
@@ -62,7 +62,7 @@ List<User> listUsers() {
 
 ```
 
-### The @Field annotation
+### Аннотация @Field
 
 To properly encode and decode an object, its class must have every serializable member
 annotated with `@Field`.
