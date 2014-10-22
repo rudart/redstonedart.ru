@@ -161,9 +161,9 @@ class User {
 
 Каждый класс, который может быть кодирован/декодирован должен иметь стандартный конструктор без обязательных параметров.
 
-### Data validation
+### Валидация данных
 
-The `Validator` class provides a simple and flexible way to build a set of validation rules.
+Класс `Validator` предоставляет простой и гибкий способ для создания набора правил валидации.
 
 ```dart
   var userValidator = new Validator()
@@ -178,8 +178,7 @@ The `Validator` class provides a simple and flexible way to build a set of valid
   }
 ```
 
-To validate objects, you must provide the target class to the constructor. Also,
-you must annotate with `@Field` all members that can be validated.
+Для валидации объектов вы можете передать нужный класс в конструктор. Также вы должны проставить аннотацию `@Field` у каждого свойства, значение которого будет проверяться.
 
 ```dart
 class User {
@@ -207,7 +206,7 @@ if (err != null) {
 }
 ```
 
-Alternatively, you can set the rules directly in the class. 
+Другой способ - это описание правил валидации прямо у свойств:
 
 ```dart
 class User {
@@ -225,8 +224,7 @@ class User {
 var userValidator = new Validator(User, true);
 ```
 
-You can also inherit from the `Schema` class, which will provide a `Validator`
-for you.
+Также вы можете наследоваться от класса `Schema`, который предоставляет `Validator`.
 
 ```dart
 class User extends Schema {
@@ -252,22 +250,21 @@ if (err != null) {
 }
 ```
 
-redstone_mapper already provides the following basic rules, that you can use
-to build a `Validator`: 
+redstone_mapper предоставляет следующие базовые правила, которые вы можете использовать для построения валидации:
 
 * `NotEmpty`:
-    * If the value is a String, verify if it isn't null, empty, or contains only spaces.
-    * If the value is an Iterable, verify if isn't null or empty.
-    * For other values, verify if it isn't null.
+    * Если значение строка, то проверит ее на `null`, пустая ли она или содержит только пробельные символы.
+    * Если значение `Iterable`, то проверит, не является ли оно `null` или пустым.
+    * Другие значения просто проверит на то, не являются ли они `null`.
 * `Range`:
-    * If the value is numeric, verify if it's within the specified range.
-    * If the value is a String or an Iterable, verify if its length is within the specified range.
+    * Если значение число, то проверит, попадает ли оно в указанный диапазон
+    * Если значение строка или `Iterable`, то проверит, попадает ли их длина в указанный диапазон.
 * `Matches`:
-    * For strings only: verify if the value matches the specified regex.
+    * Только для строк. Проверяет, соответствует ли строка регулярному выражению.
 * `OnlyNumbers`:
-    * For strings only: verify if the value contains only digit characters.
+    * Только для строк. Проверят, содержит ли строка только цифровые символы.
 
-You can easily build new rules by just inheriting from the `ValidationRule` class.
+Вы можете очень просто создавать новые правила, расширив класс `ValidationRule`.
 
 ### Configuration
 
