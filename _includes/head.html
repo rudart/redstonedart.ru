@@ -5,7 +5,12 @@
   <link rel="canonical" href="http://redstonedart.ru">
   <link rel="alternate" type="application/rss+xml" title="RSS"
       href="http://redstonedart.ru/feed.xml">
-  <title>Redstone.dart - серверный микрофреймворк на Dart</title>
+  <title>
+  {% if page.title %}
+    {{page.title}} |
+  {% endif %}
+  Redstone.dart - серверный микрофреймворк на Dart
+  </title>
 
   <!-- Bootstrap -->
   <link href="/css/bootstrap.min.css" rel="stylesheet">
