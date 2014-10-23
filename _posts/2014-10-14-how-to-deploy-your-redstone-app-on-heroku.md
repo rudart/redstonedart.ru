@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "How to deploy your Redstone.dart app to Heroku"
+title: "Как разместить приложение Redstone.dart на Heroku"
 author: Luiz Mineo
 ---
 
-Today I've got some time to play with the new [cedar-14](https://blog.heroku.com/archives/2014/8/19/cedar-14-public-beta) stack and the [Dart buildpack](https://github.com/igrigorik/heroku-buildpack-dart), and I'm impressed on how easy it is now to deploy Dart apps on [Heroku](http://heroku.com). 
+Сегодня я немного поиграл с [cedar-14](https://blog.heroku.com/archives/2014/8/19/cedar-14-public-beta) и [Dart buildpack](https://github.com/igrigorik/heroku-buildpack-dart) и был удивлен, как легко теперь можно размещать приложения на Dart на [Heroku](http://heroku.com).
 
-Basically, to run on Heroku, your app must be configurable through environment variables. The minimal configuration that every heroku application must handle is the port number, where the server is allowed to bind to. Let's see an example:
+Чтобы запуститься на Heroku ваше приложение должно настраиваться через переменные окружения. Каждое приложение должно как минимум брать из переменных окружения номер порта, на котором должен работать сервер. Давайте посмотрим пример:
 
 ```dart
 
@@ -14,16 +14,16 @@ import "dart:io";
 
 import "package:redstone/server.dart" as app;
 
-//Import services here
+// Импортируем сервисы
 
 main(List<String> args) {
 
   app.setupConsoleLog();
 
-  //check environment variables
+  // возьмем переменную окружения
   var port = _getConfig("PORT", "8080");
 
-  //start the server
+  // запустим сервер
   app.start(port: int.parse(port));
 }
 
@@ -37,7 +37,7 @@ _getConfig(String name, [defaultValue]) {
 
 ```
 
-If your app also has client code, it's a good idea to make the path to the web folder configurable too.
+Если ваше приложение имеет клиентский код, то было бы хорошо сделать так, чтобы путь к публичной папке можно было тоже настроить через переменные окружения.
 
 ```dart
 import "dart:io";
@@ -45,17 +45,17 @@ import "dart:io";
 import "package:redstone/server.dart" as app;
 import "package:shelf_static/shelf_static.dart";
 
-//Import services here
+// Импортируем сервисы
 
 main(List<String> args) {
 
   app.setupConsoleLog();
 
-  //check environment variables
+  // возьмем переменные окружения
   var port = _getConfig("PORT", "8080");
   var web = _getConfig("WEB_FOLDER", "web");
 
-  //start the server
+  // запустим сервер
   app.setShelfHandler(createStaticHandler(web,
                       defaultDocument: "index.html"));
   app.start(port: int.parse(port));
@@ -72,16 +72,15 @@ _getConfig(String name, [defaultValue]) {
 
 ```
 
-When you push your Dart application to Heroku, it uses the `pub build` command to compile the client code, and then starts the server. To allow Heroku to run your server, you need to create a `Procfile` file with the command to start it. For example, if your server entry-point is defined in the bin/server.dart file, the Procfile can have the following content:
+Когда вы отправляете Dart-приложение на Heroku, то запускается команда `pub build` для компиляции клиентского кода, после чего запускается сервер. Для того, чтобы Heroku смог запустить ваш сервер, нужно создать `Procfile`, в котором будет написана команда для запуска. Например, если точка входа в ваш сервер находится в файле `bin/server.dart`, то содержимое `Procfile` должно выглядеть так:
 
 ```
 web: ./dart-sdk/bin/dart bin/server.dart
 ```
 
-With everything set up, you can use the [Heroku Toolbelt](https://toolbelt.heroku.com/) to deploy your app. To do so, just run the following commands
-from the application root folder.
+Для настройки развертывания приложения вы можете использовать [Heroku Toolbelt](https://toolbelt.heroku.com/). Для того, чтобы начать его использовать, просто введите следующие команды в корневой директории вашего проекта.
 
-First, you need a git repository to transfer your app to Heroku. If you already have one, you can ignore this step:
+Первым делом нужно сделать git-репозиторий. Если он уже создан, то можете пропустить этот шаг:
 
 ```
 $ git init
@@ -89,37 +88,36 @@ $ git add .
 $ git commit -am "first commit"
 ```
 
-Create a Heroku application using the cedar-14 stack:
+Создайте Heroku-приложение через cedar-14:
 
 ```
 $ heroku create -s cedar-14
 ```
 
-Configure a Dart SDK archive. The following link points to Dart SDK 1.7-dev.4.6, but you can get another version 
-[here](https://www.dartlang.org/tools/download_archive/) (be sure to get a Linux 64-bit build):
+Укажите архив с Dart SDK. Следующия ссылка веден на Dart SDK 1.7-dev.4.6, но вы можете использовать другую версию [отсюда](https://www.dartlang.org/tools/download_archive/) (убедитесь, что выбрали 64-битную версию для Linux):
 
 ```
 $ heroku config:set DART_SDK_URL=https://storage.googleapis.com/dart-archive/channels/dev/release/41090/sdk/dartsdk-linux-x64-release.zip
 ```
 
-Configure the Dart buildpack:
+Настройте Dart buildpack:
 
 ```
 $ heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
 ```
 
-Configure the path to the client code:
+Укажите путь к директории с клиентским кодом:
 
 ```
 $ heroku config:set WEB_FOLDER=build/web
 ```
 
-And finally, push the application to Heroku:
+Наконец, сделайте push приложения в Heroku:
 
 ```
 $ git push heroku master
 ```
 
-If everything goes right, your app will be ready for use! You can see its URL in the output of the `git push` command. It's also possible to access it through the Heroku Dashboard. 
+Если все пройдет нормально, то ваше приложение будет готово к использованию. Вы можете увидеть URL в выводе команды `git push`. Также можно получить доступ к приложению через панель Heroku.
 
-For more information, take a look at the [Heroku](https://devcenter.heroku.com/articles/how-heroku-works) and [Dart buildpack](https://github.com/igrigorik/heroku-buildpack-dart) documentations. You can also see a more complete example [here](https://github.com/luizmineo/io_2014_contacts_demo).
+Для получения более подробной ифнормации почитайте документацию к [Heroku](https://devcenter.heroku.com/articles/how-heroku-works) и [Dart buildpack](https://github.com/igrigorik/heroku-buildpack-dart). Вы также можете посмотретть рабочий пример [здесь](https://github.com/luizmineo/io_2014_contacts_demo).
