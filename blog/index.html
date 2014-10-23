@@ -6,17 +6,17 @@ menu_item: blog
 <div class="container">
     {% for post in site.posts %}
     <div class="page-header">
-      <h1>{{ post.title }}</h1>
+      <h1><a href="{{post.url}}">{{ post.title }}</a></h1>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <p><b>{{ post.date | date: "%-d %B %Y" }}</b> <small class="post-author">by {{post.author}}</small></p>
+        <p><b>{{ post.date | date: "%-d %B %Y" }}</b> <small class="post-author">автор: {{post.author}}</small></p>
         {% if post.disable_excerpt %}
           {{ post.content }}
         {% else %}
           {{ post.excerpt }}
         {% endif %}
-        <p><a href="{{post.url}}">more...</a></p>
+        <p><a href="{{post.url}}">Далее</a></p>
       </div>
     </div>
     

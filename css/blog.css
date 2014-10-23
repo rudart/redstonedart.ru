@@ -1,5 +1,10 @@
-h1 {
+h1 a{
   color: red;
+}
+
+h1 a:hover{
+  color: red;
+  text-decoration: none;
 }
 
 .comments-area {
