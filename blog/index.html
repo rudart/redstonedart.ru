@@ -10,7 +10,7 @@ menu_item: blog
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <p><b>{{ post.date | date: "%-d %B %Y" }}</b> <small class="post-author">автор: {{post.author}}</small></p>
+        <p><b>{{ post.date | date: "%-d.%m.%Y" }}</b> <small class="post-author">автор: {{post.author}}</small></p>
         {% if post.disable_excerpt %}
           {{ post.content }}
         {% else %}
