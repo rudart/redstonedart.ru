@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "New Redstone.dart plugin: redstone_web_socket"
+title: "Новый плагин для Redstone.dart: redstone_web_socket"
 author: Luiz Mineo
 ---
 
-A new Redstone.dart plugin is available on pub: [redstone_web_socket](http://pub.dartlang.org/packages/redstone_web_socket).
+Новый плагин для Redstone.dart доступен на pub: [redstone_web_socket](http://pub.dartlang.org/packages/redstone_web_socket).
 
 This plugin is a wrapper to the [shelf_web_socket](http://pub.dartlang.org/packages/shelf_web_socket) package. It provides a `@WebSocketHandler` annotation, which can be used to define web socket handlers:
 

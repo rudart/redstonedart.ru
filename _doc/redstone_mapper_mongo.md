@@ -50,6 +50,7 @@ MongoDb get mongoDb => app.request.attributes.dbConn;
 Объект `MongoDb` предоставляет вспомогательные функции для кодирования и декодирования объектов:
 
 ```dart
+import 'dart:async';
 import 'package:redstone/server.dart' as app;
 import 'package:redstone_mapper/mapper.dart';
 import 'package:redstone_mapper/plugin.dart';

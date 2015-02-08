@@ -5,10 +5,11 @@ title: Группы
 prev: Error-handlers
 next: Dependency-Injection
 ---
+
 Аннотация `@Group` используется для определения группы маршрутов, перехватчиков и обработчиков ошибок:
 
 ```dart
-@Group("/user")
+@app.Group("/user")
 class UserService {
   
   @app.Route("/find")
@@ -29,7 +30,7 @@ class UserService {
 В примере ниже мы определяем группу с URL `/user`. При GET-запросе на этот путь, мы выполним функцию `getUser()`; при POST-запросе, будет выполнена функция `postUser()`. Если к нам придет запрос вида `/user/:id`, то будет выполнена функция `getUserById(String id)`.
 
 ```dart
-@Group("/user")
+@app.Group("/user")
 class UserService {
   
   @app.DefaultRoute()

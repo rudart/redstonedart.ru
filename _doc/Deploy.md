@@ -86,9 +86,9 @@ $ dart tool/grind.dart all
 
 DartVoit предоставляет набор шаблонов приложений, построенных на разных фреймворках, включая Redstone.dart, которые вы можете использовать для создания вашего приложения:
 
-* [Hello World](https://github.com/DartTemplates/Redstone-Hello)
-* [Guestbook](https://github.com/DartTemplates/Redstone-Guestbook)
-* [Todo List](https://github.com/DartTemplates/Redstone-Angular-Todo)
+* [Hello World](https://github.com/DartVoid/Redstone-Hello)
+* [Guestbook](https://github.com/DartVoid/Redstone-Guestbook)
+* [Todo List](https://github.com/DartVoid/Redstone-Angular-Todo)
 
 ##Heroku
 
